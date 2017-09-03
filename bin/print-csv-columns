@@ -1,0 +1,19 @@
+#!/usr/bin/awk -f
+
+# Prints the columns names for a CSV file.
+#
+# Example:
+#   ./print-csv-columns example.csv 
+#
+# You can use FS to specify a different column separator, for example:
+#   ./print-csv-columns FS='|' example.com
+
+BEGIN {
+  FS = ",";
+}
+{
+  for(fn=1; fn<=NF; fn++) {
+    print fn" = "$fn;
+  };
+  exit;
+}
