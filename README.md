@@ -1,2 +1,2 @@
-# scripts
-A collection of useful scripts
+# Scripts
+This is a repository of useful scripts.
