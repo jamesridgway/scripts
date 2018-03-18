@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Send key pressed to tmux.
+#
+# Example usage:
+#     tmux-type "echo Hello"
+#   Or:
+#     tmux-type <<< "echo Hello"
+
+if [ -t 0 ]; then
+ 	TEXT="$1"
+else
+	TEXT=$(cat /dev/stdin)
+fi
+
+for (( i=0; i<${#TEXT}; i++ )); do
+  tmux send-keys "${TEXT:$i:1}"
+  sleep 0.02
+done
+tmux send-keys Enter
