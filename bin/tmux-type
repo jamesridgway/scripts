@@ -7,6 +7,42 @@
 #   Or:
 #     tmux-type <<< "echo Hello"
 
+cmd_usage()
+{
+	printf "%b" "
+tmux-type - send keys presses to a tmux session
+  Usage:
+    tmux-type [-t <target-pane>] keys
+        Sends key presses to the provided target pane.
+  Options:
+    -t    Tmux target pane
+    -s    Sleep timeout (seconds)
+"
+}
+
+
+sleep_timeout="0.02"
+opts="$(getopt -o ht:s: -- "$@")"
+eval set -- "$opts"
+while true; do case $1 in
+  -t)
+    target_pane=$2;
+    shift 2
+    ;;
+  -s)
+    sleep_timeout=$2;
+    shift 2
+    ;;
+  -h)
+    cmd_usage
+    exit
+    ;;
+  --)
+    shift
+    break
+    ;;
+esac done
+
 if [ -t 0 ]; then
  	TEXT="$1"
 else
@@ -14,7 +50,7 @@ else
 fi
 
 for (( i=0; i<${#TEXT}; i++ )); do
-  tmux send-keys "${TEXT:$i:1}"
-  sleep 0.02
+  tmux send-keys -t "$target_pane" "${TEXT:$i:1}"
+  sleep "${sleep_timeout}"
 done
-tmux send-keys Enter
+tmux send-keys -t "$target_pane" Enter
