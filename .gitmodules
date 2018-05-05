@@ -1,3 +1,3 @@
 [submodule "pwnedpasswords.sh"]
 	path = pwnedpasswords.sh
-	url = git@github.com:jamesridgway/pwnedpasswords.sh.git
+	url = https://github.com/jamesridgway/pwnedpasswords.sh.git
